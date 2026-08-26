@@ -1,0 +1,11 @@
+{
+  "name": "dado-core",
+  "displayName": "Dado Core",
+  "version": "0.1.0",
+  "description": "Shared orientation, planning, evidence-first debugging, safe editing and honest verification discipline used by every other dado-tools plugin.",
+  "author": { "name": "Dado211207" },
+  "homepage": "https://github.com/Dado211207/dado-claude-toolkit/blob/main/plugins/dado-core/README.md",
+  "repository": "https://github.com/Dado211207/dado-claude-toolkit",
+  "license": "MIT",
+  "keywords": ["discipline", "verification", "planning", "debugging", "audit"]
+}

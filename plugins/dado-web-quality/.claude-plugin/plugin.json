@@ -1,0 +1,11 @@
+{
+  "name": "dado-web-quality",
+  "displayName": "Dado Web Quality",
+  "version": "0.1.0",
+  "description": "Quality gate for websites and web apps: responsive layout, accessibility, routing, SEO metadata, headers, Playwright and Lighthouse interpretation.",
+  "author": { "name": "Dado211207" },
+  "homepage": "https://github.com/Dado211207/dado-claude-toolkit/blob/main/plugins/dado-web-quality/README.md",
+  "repository": "https://github.com/Dado211207/dado-claude-toolkit",
+  "license": "MIT",
+  "keywords": ["web", "accessibility", "responsive", "seo", "playwright", "lighthouse"]
+}

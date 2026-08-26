@@ -1,0 +1,11 @@
+{
+  "name": "dado-python-windows",
+  "displayName": "Dado Python Windows",
+  "version": "0.1.0",
+  "description": "Review and release workflow for Python desktop applications on Windows: subprocess safety, packaging, installer verification and honest hardware-test reporting.",
+  "author": { "name": "Dado211207" },
+  "homepage": "https://github.com/Dado211207/dado-claude-toolkit/blob/main/plugins/dado-python-windows/README.md",
+  "repository": "https://github.com/Dado211207/dado-claude-toolkit",
+  "license": "MIT",
+  "keywords": ["python", "windows", "pyinstaller", "inno-setup", "desktop"]
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "dado-tools",
+  "owner": {
+    "name": "Dado211207",
+    "url": "https://github.com/Dado211207"
+  },
+  "description": "Reusable Claude Code plugins for repository discipline, web quality gates, Python/Windows desktop release work, bilingual content review, and strict release safety.",
+  "version": "0.1.0",
+  "plugins": [
+    {
+      "name": "dado-core",
+      "displayName": "Dado Core",
+      "source": "./plugins/dado-core",
+      "description": "Shared orientation, planning, evidence-first debugging, safe editing and honest verification discipline used by every other dado-tools plugin.",
+      "version": "0.1.0",
+      "author": { "name": "Dado211207" },
+      "homepage": "https://github.com/Dado211207/dado-claude-toolkit/blob/main/plugins/dado-core/README.md",
+      "repository": "https://github.com/Dado211207/dado-claude-toolkit",
+      "license": "MIT",
+      "keywords": ["discipline", "verification", "planning", "debugging", "audit"],
+      "category": "workflow"
+    },
+    {
+      "name": "dado-web-quality",
+      "displayName": "Dado Web Quality",
+      "source": "./plugins/dado-web-quality",
+      "description": "Quality gate for websites and web apps: responsive layout, accessibility, routing, SEO metadata, headers, Playwright and Lighthouse interpretation.",
+      "version": "0.1.0",
+      "author": { "name": "Dado211207" },
+      "homepage": "https://github.com/Dado211207/dado-claude-toolkit/blob/main/plugins/dado-web-quality/README.md",
+      "repository": "https://github.com/Dado211207/dado-claude-toolkit",
+      "license": "MIT",
+      "keywords": ["web", "accessibility", "responsive", "seo", "playwright", "lighthouse"],
+      "category": "quality"
+    },
+    {
+      "name": "dado-python-windows",
+      "displayName": "Dado Python Windows",
+      "source": "./plugins/dado-python-windows",
+      "description": "Review and release workflow for Python desktop applications on Windows: subprocess safety, packaging, installer verification and honest hardware-test reporting.",
+      "version": "0.1.0",
+      "author": { "name": "Dado211207" },
+      "homepage": "https://github.com/Dado211207/dado-claude-toolkit/blob/main/plugins/dado-python-windows/README.md",
+      "repository": "https://github.com/Dado211207/dado-claude-toolkit",
+      "license": "MIT",
+      "keywords": ["python", "windows", "pyinstaller", "inno-setup", "desktop"],
+      "category": "quality"
+    },
+    {
+      "name": "dado-content-localization",
+      "displayName": "Dado Content and Localization",
+      "source": "./plugins/dado-content-localization",
+      "description": "Factual writing, bilingual (EN/ME) synchronization, CV consistency and metadata review with a strict no-invented-claims rule.",
+      "version": "0.1.0",
+      "author": { "name": "Dado211207" },
+      "homepage": "https://github.com/Dado211207/dado-claude-toolkit/blob/main/plugins/dado-content-localization/README.md",
+      "repository": "https://github.com/Dado211207/dado-claude-toolkit",
+      "license": "MIT",
+      "keywords": ["content", "localization", "bilingual", "cv", "metadata"],
+      "category": "content"
+    },
+    {
+      "name": "dado-release-safety",
+      "displayName": "Dado Release Safety",
+      "source": "./plugins/dado-release-safety",
+      "description": "Strict review, pull request, merge and deployment gates. Stops before merge, release, tag or deploy unless the user gives a task-specific instruction.",
+      "version": "0.1.0",
+      "author": { "name": "Dado211207" },
+      "homepage": "https://github.com/Dado211207/dado-claude-toolkit/blob/main/plugins/dado-release-safety/README.md",
+      "repository": "https://github.com/Dado211207/dado-claude-toolkit",
+      "license": "MIT",
+      "keywords": ["release", "safety", "ci", "verification", "rollback"],
+      "category": "safety"
+    }
+  ]
+}
