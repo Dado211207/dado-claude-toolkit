@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_secret_files.py\"",
+            "timeout": 15,
+            "statusMessage": "dado-core: checking write target"
+          }
+        ]
+      }
+    ]
+  }
+}

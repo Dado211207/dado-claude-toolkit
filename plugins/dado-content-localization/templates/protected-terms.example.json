@@ -1,0 +1,89 @@
+{
+  "_comment": [
+    "Copy this into your project as .claude/dado-protected-terms.json and fill it in.",
+    "Nothing reads it automatically: it is a written agreement the content skills read",
+    "when you point them at it, so a review argues with your list rather than guessing.",
+    "",
+    "Every value below is a placeholder in angle brackets. Replace all of them.",
+    "This file must contain public, publishable strings only - never credentials,",
+    "never private personal data, never anything the owner has not agreed to publish."
+  ],
+
+  "languages": {
+    "default": "en",
+    "supported": ["en", "me"],
+    "requireParityBetween": ["en", "me"]
+  },
+
+  "protected": {
+    "_comment": "Must appear byte-for-byte identical. Never translated, reordered, abbreviated or expanded.",
+
+    "organisationNames": [
+      { "en": "<Official Organisation Name>", "me": "<Official Organisation Name>" }
+    ],
+
+    "jobTitles": [
+      { "en": "<Exact Approved Job Title>", "me": "<Exact Approved Job Title>" }
+    ],
+
+    "certifications": [
+      { "name": "<Exact Certification Name>", "issuer": "<Exact Issuer Name>" }
+    ],
+
+    "productNames": ["<Product Or Brand Name>"],
+
+    "factualStrings": [
+      "<An approved sentence that must survive edits word for word>"
+    ],
+
+    "locations": ["<City>", "<Country>"],
+
+    "contact": {
+      "_comment": "Public contact details only, exactly as approved for publication.",
+      "publicUrls": ["https://<example.test>/"]
+    }
+  },
+
+  "forbiddenCopy": {
+    "_comment": [
+      "Wording that was removed deliberately and must never reappear:",
+      "previous employers, superseded titles, retired product names, wrong locations,",
+      "withdrawn claims. Zero matches is the only acceptable result."
+    ],
+    "strings": [
+      "<Superseded job title>",
+      "<Former organisation name>",
+      "<Incorrect location that was corrected once>"
+    ]
+  },
+
+  "claimPolicy": {
+    "_comment": [
+      "These stay true for every project. They are restated here so the file is",
+      "self-contained when it is copied into a repository."
+    ],
+    "neverInvent": [
+      "qualifications",
+      "education completion",
+      "certifications and their issuers",
+      "employers and clients",
+      "job titles and seniority",
+      "responsibilities",
+      "dates and durations",
+      "measurable results and percentages",
+      "awards and recognitions",
+      "ownership or founding claims",
+      "language fluency levels",
+      "client relationships"
+    ],
+    "whenEvidenceIsMissing": "leave it out, use conservative wording, or flag it for user confirmation - never fill the gap with a plausible value"
+  },
+
+  "surfaces": {
+    "_comment": "Every place the same facts appear. Anything missing here is what stays wrong.",
+    "web": ["<route or file path per language>"],
+    "pdf": ["<path to each generated PDF>"],
+    "structuredData": ["<path to the JSON-LD source>"],
+    "metadata": ["<where titles and descriptions are defined>"]
+  }
+}
