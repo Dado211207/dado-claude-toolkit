@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/this_script_does_not_exist.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
