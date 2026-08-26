@@ -45,7 +45,7 @@ reports harder to fake.
 | [`dado-content-localization`](plugins/dado-content-localization/) | 0.1.0 | Factual claims, EN/ME parity, CV consistency, copy quality, content diffs |
 | [`dado-release-safety`](plugins/dado-release-safety/) | 0.1.0 | Pre-change snapshot, CI evidence, artifact integrity, Draft PR, deploy gate |
 
-30 skills, 14 agents, 4 hooks. Each plugin works on its own; installing `dado-core`
+31 skills, 14 agents, 4 hooks. Each plugin works on its own; installing `dado-core`
 alongside the others is recommended, not required.
 
 ## Trust warning — read before installing

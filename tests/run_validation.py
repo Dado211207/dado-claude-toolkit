@@ -821,6 +821,19 @@ def c21():
                 target = (path.parent / link.split("#", 1)[0]).resolve()
                 if not target.exists():
                     problems.append(f"{rel(path)}:{lineno}: broken relative link {link!r}")
+
+    # A stated component total is a factual claim; recompute rather than trust it.
+    actual = (len(skill_files()), len(agent_files()), len(HOOK_SCRIPTS))
+    for doc in ("README.md", "CHANGELOG.md"):
+        text = read_text(REPO / doc)
+        if text is None:
+            continue
+        for lineno, line in enumerate(text.splitlines(), start=1):
+            claim = re.search(r"(\d+) skills?, (\d+) agents?,? (?:and )?(\d+) hooks?", line)
+            if claim and tuple(int(g) for g in claim.groups()) != actual:
+                problems.append(
+                    f"{doc}:{lineno}: claims {claim.group(0)!r} but the repository has "
+                    f"{actual[0]} skills, {actual[1]} agents, {actual[2]} hooks")
     return problems
 
 
