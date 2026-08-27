@@ -1,0 +1,22 @@
+# Line endings are normalised to LF in the repository so that a checkout on Windows
+# does not turn every file into a diff, and so that the portability check in
+# tests/run_validation.py sees the same bytes everywhere.
+
+* text=auto eol=lf
+
+*.md      text eol=lf
+*.json    text eol=lf
+*.py      text eol=lf
+*.yml     text eol=lf
+*.yaml    text eol=lf
+*.txt     text eol=lf
+*.sh      text eol=lf
+
+# PowerShell is conventionally CRLF on Windows, but this repository ships none as
+# files; if that changes, decide deliberately rather than by default.
+*.ps1     text eol=lf
+
+*.png     binary
+*.jpg     binary
+*.pdf     binary
+*.zip     binary

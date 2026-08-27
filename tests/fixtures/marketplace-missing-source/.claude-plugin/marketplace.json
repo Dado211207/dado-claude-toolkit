@@ -1,0 +1,7 @@
+{
+  "name": "dado-tools",
+  "owner": { "name": "Dado211207" },
+  "plugins": [
+    { "name": "dado-core", "version": "0.1.0", "description": "no source field at all" }
+  ]
+}

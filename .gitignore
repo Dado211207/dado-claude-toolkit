@@ -1,0 +1,47 @@
+# Nothing generated belongs in this repository. tests/run_validation.py check 23
+# fails the build if any of these appear, so this file is the first line of defence
+# rather than the only one.
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+.cache/
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Local Claude Code state that is personal rather than shared.
+# .claude/settings.json IS tracked on purpose; the local override is not.
+.claude/settings.local.json
+
+# Secrets never belong here. These entries are a safety net, not a policy:
+# the policy is that credentials are never written to a file in this repository.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+.git-credentials

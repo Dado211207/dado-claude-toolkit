@@ -1,0 +1,7 @@
+{
+  "name": "dado-tools",
+  "owner": { "name": "Dado211207" },
+  "plugins": [
+    { "name": "escaping-plugin", "source": "../../../etc", "version": "0.1.0" }
+  ]
+}

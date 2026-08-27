@@ -1,0 +1,160 @@
+name: Validate
+
+# Cross-platform validation of the marketplace, plugins, profiles, hooks and docs.
+# It installs one exact Claude Code CLI version for the official validator. It uses
+# no secrets, publishes nothing, deploys nothing, and mutates no pull request.
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: Validate (Linux)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install the pinned Claude Code validator
+        run: npm install --global @anthropic-ai/claude-code@2.1.246
+
+      - name: Report the environment
+        run: |
+          python --version
+          node --version
+          npm --version
+          claude --version
+          git --version
+
+      - name: Confirm the exact Claude Code version
+        run: |
+          claude --version | grep -F "2.1.246"
+
+      - name: Validation run 1 of 2
+        run: python tests/run_validation.py
+
+      - name: Validation run 2 of 2
+        run: python tests/run_validation.py
+
+      - name: Execute configured hook commands
+        run: python tests/run_hook_commands.py
+
+      - name: Official Claude Code plugin validator
+        run: |
+          claude plugin validate .
+          for plugin in plugins/dado-core plugins/dado-web-quality plugins/dado-python-windows plugins/dado-content-localization plugins/dado-release-safety; do
+            claude plugin validate "$plugin"
+          done
+
+      - name: Confirm the checkout is clean
+        # Nothing above may modify the working tree. If anything did, a check has a
+        # side effect it should not have.
+        run: |
+          if [ -n "$(git status --porcelain=v1)" ]; then
+            echo "The working tree was modified by the validation run:"
+            git status --porcelain=v1
+            exit 1
+          fi
+          git diff --check
+          echo "Working tree clean."
+
+  windows:
+    name: Validate (Windows)
+    runs-on: windows-2025
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install the pinned Claude Code validator
+        run: npm install --global @anthropic-ai/claude-code@2.1.246
+
+      - name: Report the environment
+        shell: pwsh
+        run: |
+          python --version
+          node --version
+          npm --version
+          claude --version
+          git --version
+
+      - name: Confirm the exact Claude Code version
+        shell: pwsh
+        run: |
+          $version = claude --version
+          if ($version -notmatch '2\.1\.246') {
+            throw "Expected Claude Code 2.1.246, got: $version"
+          }
+
+      - name: Validation run 1 of 2
+        run: python tests/run_validation.py
+
+      - name: Validation run 2 of 2
+        run: python tests/run_validation.py
+
+      - name: Execute configured hook commands
+        run: python tests/run_hook_commands.py
+
+      - name: Official Claude Code plugin validator
+        shell: pwsh
+        run: |
+          claude plugin validate .
+          $plugins = @(
+            'plugins/dado-core',
+            'plugins/dado-web-quality',
+            'plugins/dado-python-windows',
+            'plugins/dado-content-localization',
+            'plugins/dado-release-safety'
+          )
+          foreach ($plugin in $plugins) {
+            claude plugin validate $plugin
+          }
+
+      - name: Confirm the checkout is clean
+        shell: pwsh
+        run: |
+          $changes = git status --porcelain=v1
+          if ($changes) {
+            Write-Host 'The working tree was modified by the validation run:'
+            Write-Host $changes
+            exit 1
+          }
+          git diff --check
+          Write-Host 'Working tree clean.'

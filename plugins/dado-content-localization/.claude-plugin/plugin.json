@@ -1,0 +1,11 @@
+{
+  "name": "dado-content-localization",
+  "displayName": "Dado Content and Localization",
+  "version": "0.1.0",
+  "description": "Factual writing, bilingual (EN/ME) synchronization, CV consistency and metadata review with a strict no-invented-claims rule.",
+  "author": { "name": "Dado211207" },
+  "homepage": "https://github.com/Dado211207/dado-claude-toolkit/blob/main/plugins/dado-content-localization/README.md",
+  "repository": "https://github.com/Dado211207/dado-claude-toolkit",
+  "license": "MIT",
+  "keywords": ["content", "localization", "bilingual", "cv", "metadata"]
+}

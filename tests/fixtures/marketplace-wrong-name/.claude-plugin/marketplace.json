@@ -1,0 +1,7 @@
+{
+  "name": "some-other-marketplace",
+  "owner": { "name": "Dado211207" },
+  "plugins": [
+    { "name": "dado-core", "source": "./plugins/dado-core", "version": "0.1.0" }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "_comment": [
+    "Copy this file into a project as .claude/dado-web-quality.json and edit it.",
+    "Nothing reads it automatically: it is a written agreement about what the checks",
+    "mean for this project, which the skills read when you point them at it.",
+    "Every value below is an example. Replace all of them with your project's real",
+    "requirements. Do not ship these defaults as if they were your standard."
+  ],
+
+  "viewports": [
+    { "name": "mobile-small", "width": 320, "height": 568 },
+    { "name": "mobile", "width": 390, "height": 844 },
+    { "name": "tablet", "width": 768, "height": 1024 },
+    { "name": "laptop", "width": 1280, "height": 800 },
+    { "name": "desktop", "width": 1920, "height": 1080 }
+  ],
+
+  "browsers": ["chromium", "firefox", "webkit"],
+
+  "minimumTouchTargetPx": 44,
+  "maximumHorizontalOverflowPx": 0,
+  "requireOneH1PerRoute": true,
+  "requireSkipLink": true,
+  "respectPrefersReducedMotion": true,
+
+  "languages": {
+    "default": "en",
+    "supported": ["en", "me"],
+    "requireParityBetween": ["en", "me"]
+  },
+
+  "routes": [
+    { "path": "/", "expectStatus": 200 },
+    { "path": "/this-route-does-not-exist", "expectStatus": 404 }
+  ],
+
+  "protectedStrings": {
+    "_comment": [
+      "Exact strings that must appear verbatim and must not be reworded by an edit.",
+      "Use this for official organisation names, legally exact job titles, and any",
+      "wording the owner has approved. Fill in your own; the entries below are",
+      "placeholders and are deliberately not real names."
+    ],
+    "organisationNames": ["<Example Organisation Name>"],
+    "jobTitles": ["<Example Exact Job Title>"],
+    "factualStrings": ["<Example approved factual sentence>"]
+  },
+
+  "forbiddenCopy": {
+    "_comment": [
+      "Wording that must never reappear after it was removed once — old company",
+      "names, superseded titles, wrong locations, retired product names."
+    ],
+    "strings": ["<Example superseded wording>"]
+  },
+
+  "securityHeaders": {
+    "required": [
+      "content-security-policy",
+      "x-content-type-options",
+      "referrer-policy",
+      "strict-transport-security"
+    ],
+    "forbidden": ["x-powered-by"]
+  },
+
+  "caching": {
+    "hashedAssetsMaxAgeSeconds": 31536000,
+    "htmlMustRevalidate": true
+  },
+
+  "lighthouse": {
+    "_comment": "Thresholds are a project decision, not a universal standard.",
+    "minPerformance": 0,
+    "minAccessibility": 90,
+    "minBestPractices": 0,
+    "minSeo": 90
+  }
+}
