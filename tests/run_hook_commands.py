@@ -15,6 +15,7 @@ import shlex
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 
@@ -78,60 +79,76 @@ def decision(stdout: str) -> str | None:
 def main() -> int:
     failures: list[str] = []
     ran = 0
-    branch = subprocess.run(
-        ["git", "rev-parse", "--abbrev-ref", "HEAD"],
-        cwd=REPO,
-        capture_output=True,
-        text=True,
-        timeout=10,
-        check=True,
-    ).stdout.strip()
+    branch = "configured-command-smoke"
 
-    for config in CONFIGS:
-        for event, matcher, command in configured_commands(config):
-            argv = shlex.split(command, posix=True)
-            if not argv:
-                failures.append(f"{config}: empty command")
-                continue
-            resolved = shutil.which(argv[0])
-            if not resolved:
-                failures.append(f"{config}: interpreter {argv[0]!r} is not on PATH")
-                continue
-            argv[0] = resolved
-            script_name = Path(argv[-1]).name
-            payload = payload_for(script_name, REPO)
-            env = os.environ.copy()
-            if script_name == "guard_protected_branch.py":
-                env["DADO_PROTECTED_BRANCHES"] = branch
-            proc = subprocess.run(
-                argv,
-                input=json.dumps(payload),
-                cwd=REPO,
-                env=env,
+    # GitHub checks pull requests in detached-HEAD mode. Use a disposable real
+    # branch so the protected-branch hook is tested rather than silently bypassed.
+    with tempfile.TemporaryDirectory(prefix="dado-configured-hooks-") as tmp:
+        workdir = Path(tmp)
+        setup_commands = (
+            ["git", "init", "--initial-branch", branch],
+            [
+                "git", "-c", "user.name=dado-tools validation",
+                "-c", "user.email=validation@example.invalid",
+                "commit", "--allow-empty", "-m", "configured hook smoke",
+            ],
+        )
+        for setup in setup_commands:
+            subprocess.run(
+                setup,
+                cwd=workdir,
                 capture_output=True,
                 text=True,
                 timeout=30,
-                check=False,
+                check=True,
             )
-            ran += 1
-            if proc.returncode != 0:
-                failures.append(
-                    f"{script_name}: exit {proc.returncode}; stderr={proc.stderr.strip()[:200]}"
+
+        for config in CONFIGS:
+            for event, matcher, command in configured_commands(config):
+                argv = shlex.split(command, posix=True)
+                if not argv:
+                    failures.append(f"{config}: empty command")
+                    continue
+                resolved = shutil.which(argv[0])
+                if not resolved:
+                    failures.append(f"{config}: interpreter {argv[0]!r} is not on PATH")
+                    continue
+                argv[0] = resolved
+                script_name = Path(argv[-1]).name
+                payload = payload_for(script_name, workdir)
+                env = os.environ.copy()
+                if script_name == "guard_protected_branch.py":
+                    env["DADO_PROTECTED_BRANCHES"] = branch
+                proc = subprocess.run(
+                    argv,
+                    input=json.dumps(payload),
+                    cwd=workdir,
+                    env=env,
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                    check=False,
                 )
-                continue
-            try:
-                observed = decision(proc.stdout)
-            except (ValueError, TypeError) as exc:
-                failures.append(f"{script_name}: invalid JSON output ({exc})")
-                continue
-            expected = None if script_name == "remind_uncommitted.py" else (
-                "deny" if script_name == "guard_secret_files.py" else "escalate"
-            )
-            if observed != expected:
-                failures.append(
-                    f"{script_name}: decision {observed!r}, expected {expected!r} "
-                    f"for {event}/{matcher}"
+                ran += 1
+                if proc.returncode != 0:
+                    failures.append(
+                        f"{script_name}: exit {proc.returncode}; "
+                        f"stderr={proc.stderr.strip()[:200]}"
+                    )
+                    continue
+                try:
+                    observed = decision(proc.stdout)
+                except (ValueError, TypeError) as exc:
+                    failures.append(f"{script_name}: invalid JSON output ({exc})")
+                    continue
+                expected = None if script_name == "remind_uncommitted.py" else (
+                    "deny" if script_name == "guard_secret_files.py" else "escalate"
                 )
+                if observed != expected:
+                    failures.append(
+                        f"{script_name}: decision {observed!r}, expected {expected!r} "
+                        f"for {event}/{matcher}"
+                    )
 
     if ran != 4:
         failures.append(f"executed {ran} configured commands, expected 4")
