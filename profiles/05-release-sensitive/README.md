@@ -84,7 +84,7 @@ see [`docs/MAINTENANCE.md`](../../docs/MAINTENANCE.md).
 | `sha256sum` / `Get-FileHash` | Artifact digests | Artifact identity is unverifiable |
 | `curl` | Verifying a deployed URL | Deploy verification is `not-run` |
 | A way to read CI job logs (`gh`, the GitHub MCP tools, or the web UI) | CI evidence | Only the conclusion is visible, not what actually ran |
-| `python3` | The three hooks | The hooks are inert; the skills still apply |
+| `python` | The three hooks | The hooks are inert; the skills still apply |
 
 ## Suggested verification commands
 

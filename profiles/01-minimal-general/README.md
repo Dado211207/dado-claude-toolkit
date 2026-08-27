@@ -41,7 +41,7 @@ available.
 | Tool | Needed for | If missing |
 | --- | --- | --- |
 | `git` | Everything | Nothing works; this is a git-centred workflow |
-| `python3` | The `dado-core` secret-file hook | The hook is inert. Skills still work |
+| `python` | The `dado-core` secret-file hook | The hook is inert. Skills still work |
 
 No other dependencies. `dado-core` adds no runtime dependency to your project.
 

@@ -850,6 +850,17 @@ def c21():
                 problems.append(
                     f"{doc}:{lineno}: claims {claim.group(0)!r} but the repository has "
                     f"{actual[0]} skills, {actual[1]} agents, {actual[2]} hooks")
+
+    # Hook commands deliberately use the cross-platform ``python`` launcher.
+    # Keep profile requirement tables aligned with the commands they document;
+    # ``python3`` is not a reliable command name on native Windows.
+    for path in sorted((REPO / "profiles").glob("0*/README.md")):
+        text = read_text(path) or ""
+        for lineno, line in enumerate(text.splitlines(), start=1):
+            if "`python3`" in line and "hook" in line.lower():
+                problems.append(
+                    f"{rel(path)}:{lineno}: hook requirement must name cross-platform `python`, not `python3`"
+                )
     return problems
 
 
