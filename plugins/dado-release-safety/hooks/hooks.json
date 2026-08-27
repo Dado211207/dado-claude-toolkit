@@ -2,11 +2,11 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Bash",
+        "matcher": "Bash|PowerShell",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_destructive_commands.py\"",
+            "command": "python \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_destructive_commands.py\"",
             "timeout": 15,
             "statusMessage": "dado-release-safety: checking command"
           }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_protected_branch.py\"",
+            "command": "python \"${CLAUDE_PLUGIN_ROOT}/hooks/guard_protected_branch.py\"",
             "timeout": 15,
             "statusMessage": "dado-release-safety: checking branch"
           }
@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/remind_uncommitted.py\"",
+            "command": "python \"${CLAUDE_PLUGIN_ROOT}/hooks/remind_uncommitted.py\"",
             "timeout": 15,
             "statusMessage": "dado-release-safety: checking git status"
           }

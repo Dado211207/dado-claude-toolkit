@@ -29,7 +29,7 @@ reports harder to fake.
   prompt, and nothing here bypasses Claude Code's permission system.
 - **Not a security boundary.** The hooks are convenience guards. They see only what
   Claude Code routes through them, a user can disable them, and they are inert
-  without `python3`.
+  without Python 3 exposed as `python` on `PATH`.
 - **Not memory.** `docs/ai/PROJECT_STATE.md` is an ordinary tracked file, read again
   because it is committed. Claude Code carries no state between sessions on its own.
 - **Not "globally enabled everywhere".** Installation is per scope, and cloud
@@ -91,9 +91,9 @@ one exception is `/dado-release-safety:draft-pr`, which only you can start.
 
 `/plugin` is a terminal-only command and is **not available in Claude Code on the
 web**. The documented cloud path is declaring the marketplace and plugins in a
-committed `.claude/settings.json` — but the same documentation notes that a plugin
-from an external source may not load until someone installs it once. This repository
-has **not** verified that end to end. What always works in a cloud session is
+committed `.claude/settings.json`. External plugins can still require a one-time
+installation/trust step. This repository has **not** verified that web flow end to
+end. What always works in a cloud session is
 committed repository content: `.claude/agents/`, `.claude/skills/`, `CLAUDE.md`, and
 `permissions.deny`. See [docs/CLOUD-USAGE.md](docs/CLOUD-USAGE.md) for the fallbacks.
 
@@ -119,10 +119,12 @@ what to clean up: [docs/UNINSTALL.md](docs/UNINSTALL.md).
 
 ```bash
 claude plugin validate .              # the official Claude Code validator
-python3 tests/run_validation.py       # 30 structural, safety and behavioural checks
+python tests/run_validation.py        # 30 structural, safety and behavioural checks
+python tests/run_hook_commands.py     # execute all four configured hook commands
 ```
 
-The suite uses the Python standard library only and needs no network access. It
+The Python suites use the standard library only and need no network access. CI also
+runs the official validator pinned to Claude Code 2.1.246 on Linux and Windows. It
 proves, among other things, that no plugin ships an `allow` rule, no hook can grant a
 permission, no secret or private key is committed, and no plugin enables a merge or a
 deployment.

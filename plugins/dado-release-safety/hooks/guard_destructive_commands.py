@@ -3,7 +3,7 @@
 
 Contract with Claude Code (see https://code.claude.com/docs/en/hooks):
 
-  * stdin  : one JSON object describing the pending Bash call
+  * stdin  : one JSON object describing the pending Bash or PowerShell call
   * stdout : nothing, or a JSON object with hookSpecificOutput
   * exit 0 : always, unless Python itself fails
 
@@ -14,7 +14,7 @@ is not this hook's job; making the decision visible is).
 
 Limits, stated plainly: this is a speed bump, not a security boundary. It matches
 text, so an equivalent command written differently, built at runtime, or run from a
-script file will not match. It is inert without ``python3`` on PATH. Do not rely on
+script file will not match. It is inert without ``python`` on PATH. Do not rely on
 it to contain an untrusted agent.
 
 Side effects: none. Reads stdin, writes stdout, touches no file and no network.
@@ -70,6 +70,12 @@ RULES: tuple[tuple[re.Pattern[str], str], ...] = (
      "this deploys to a hosting provider"),
     (re.compile(r"\brm\s+-[a-zA-Z]*r[a-zA-Z]*f|\brm\s+-[a-zA-Z]*f[a-zA-Z]*r"),
      "recursive force delete is irreversible"),
+    (re.compile(
+        r"\bRemove-Item\b[^\n]*(?:-(?:Recurse|r)\b[^\n]*-(?:Force|fo)\b|"
+        r"-(?:Force|fo)\b[^\n]*-(?:Recurse|r)\b)",
+        re.IGNORECASE,
+     ),
+     "PowerShell recursive force delete is irreversible"),
 )
 
 

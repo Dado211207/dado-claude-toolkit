@@ -45,18 +45,17 @@ Declaring the marketplace and plugins in the repository's settings:
 }
 ```
 
-Two official statements apply, and they pull in different directions:
+Two official requirements apply:
 
 1. Declaring a plugin under `enabledPlugins` in `.claude/settings.json` is the
    documented path **for cloud sessions**.
-2. As of Claude Code v2.1.195, "adding the marketplace doesn't install plugins that
-   come from an external source, on any path that loads plugins. A plugin that only
-   the project's `.claude/settings.json` enables, and that comes from an external
-   source such as a GitHub repository or npm package, doesn't load until the team
-   member installs it."
+2. An external plugin still needs its marketplace/install trust established for the
+   account or environment that loads it. A committed enablement entry is not a
+   silent permission grant.
 
-This toolkit is an external source (a GitHub repository). So the declaration is
-correct and may still not be enough on its own.
+This toolkit is an external source (a GitHub repository). The declaration is the
+right configuration; it is not proof that a specific account has completed the
+required trust/install step.
 
 **This repository has not verified the end-to-end behaviour in a cloud session.** It
 is listed here as documented-but-unverified rather than presented as working. If you
@@ -100,10 +99,10 @@ This is the lowest-tech option and the most reliable one. Start here.
 
 ## Hooks in a cloud session
 
-The hooks need `python3` on `PATH` in the session's environment. Cloud environments
+The hooks need Python 3 exposed as `python` on `PATH` in the session's environment. Cloud environments
 generally have it, but this is not a guarantee you should build on:
 
-- If `python3` is missing, a hook command fails. Claude Code treats a failing hook as
+- If `python` is missing, a hook command fails. Claude Code treats a failing hook as
   non-blocking for these events, so the guard is simply **inert** — no error, no
   block, no protection.
 - `guard_protected_branch.py` and `remind_uncommitted.py` also need `git`, which a
@@ -140,7 +139,7 @@ That is not a limitation of the toolkit; it is the honest boundary of the enviro
 ## Setup scripts
 
 A cloud environment can run a setup script when a session starts — useful for
-installing `python3`, Playwright browsers or project dependencies so that fewer
+installing Python 3, Playwright browsers or project dependencies so that fewer
 checks come back `not-run`. See
 https://code.claude.com/docs/en/cloud-environments#setup-scripts.
 

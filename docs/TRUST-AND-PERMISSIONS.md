@@ -58,7 +58,7 @@ The four hooks are useful and they are not protection. Concretely:
 - they match text, so an equivalent command written differently, built at runtime, or
   run from a script file will not match
 - a user can disable them (`disableAllHooks`, or disabling the plugin)
-- without `python3` on `PATH` they fail, Claude Code treats that as non-blocking, and
+- without Python 3 exposed as `python` on `PATH` they fail, Claude Code treats that as non-blocking, and
   they are simply inert
 - they never emit `allow`, so the worst a broken hook can do is fail open — back to
   the normal permission flow
@@ -100,7 +100,8 @@ git clone https://github.com/Dado211207/dado-claude-toolkit
 cd dado-claude-toolkit
 git log --oneline -5          # what you are getting
 claude plugin validate .
-python3 tests/run_validation.py
+python tests/run_validation.py
+python tests/run_hook_commands.py
 ```
 
 Then read the four hook scripts. They are the only code that executes:

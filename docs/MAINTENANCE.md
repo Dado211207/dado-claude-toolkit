@@ -29,7 +29,7 @@ CLI version it was researched against. Before trusting it:
 ```bash
 claude --version
 claude plugin validate .
-python3 tests/run_validation.py
+python tests/run_validation.py
 ```
 
 Then re-read the documentation URLs listed at the top of that page. If a format
@@ -39,9 +39,10 @@ version. A compatibility page with a stale date is worse than none.
 ## Changing the toolkit
 
 ```bash
-python3 tests/run_validation.py          # 30 checks; run before and after
-python3 tests/run_validation.py --quick  # structural only, no subprocesses
-python3 tests/run_validation.py --json   # machine-readable
+python tests/run_validation.py          # 30 checks; run before and after
+python tests/run_validation.py --quick  # structural only, no subprocesses
+python tests/run_validation.py --json   # machine-readable
+python tests/run_hook_commands.py       # actual configured hook commands
 claude plugin validate .
 ```
 
@@ -91,12 +92,11 @@ Nothing here is missing functionality that the toolkit claims to have.
 **Infrastructure**
 
 - Verify the cloud `enabledPlugins` path end to end and record the result in
-  `CLOUD-USAGE.md`, replacing the current documented-but-unverified note
+  `CLOUD-USAGE.md`, replacing the current documented-but-unverified note while
+  keeping the vendoring fallback until that passes
 - A vendoring helper that copies selected skills into a target repository's
   `.claude/` (currently a documented manual `cp`)
 - A published tag so `ref` pinning has something to point at
-- Windows CI for the hook scripts (they are pure Python; the risk is `python3`
-  resolution on Windows, which is documented rather than tested)
 
 **Considered and rejected for now**
 

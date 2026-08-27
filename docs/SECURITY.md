@@ -45,7 +45,7 @@ shell, a five-second cap, in the session's working directory. Nothing else execu
 ## Limits, stated plainly
 
 - **The hooks are not a security boundary.** They match text, they can be disabled,
-  and they are inert without `python3`. Do not use them to contain an untrusted
+  and they are inert without Python 3 exposed as `python`. Do not use them to contain an untrusted
   agent.
 - **The validation suite checks this repository, not your project.** It proves the
   toolkit ships nothing dangerous. It says nothing about the code you point it at.

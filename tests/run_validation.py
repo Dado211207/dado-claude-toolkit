@@ -5,9 +5,9 @@ Python standard library only. No third-party dependency, no network access, no
 writes outside a temporary directory that this script creates and removes.
 
 Usage:
-    python3 tests/run_validation.py            # all checks
-    python3 tests/run_validation.py --quick    # structural checks only, no subprocesses
-    python3 tests/run_validation.py --json     # machine-readable summary on stdout
+    python tests/run_validation.py            # all checks
+    python tests/run_validation.py --quick    # structural checks only, no subprocesses
+    python tests/run_validation.py --json     # machine-readable summary on stdout
 
 Exit status: 0 when no check failed, 1 when any check failed. A skipped check never
 fails the run, and is always reported as skipped with the reason - never as a pass.
@@ -519,11 +519,27 @@ def c09():
             command = handler.get("command", "")
             if "${CLAUDE_PLUGIN_ROOT}" not in command:
                 problems.append(f"{rel(config_path)} [{event}]: command must use ${{CLAUDE_PLUGIN_ROOT}}")
+            if not command.startswith("python "):
+                problems.append(
+                    f"{rel(config_path)} [{event}]: command must use cross-platform 'python'"
+                )
             for script in re.findall(r"\$\{CLAUDE_PLUGIN_ROOT\}/([^\"'\s]+)", command):
                 if not (plugin_root / script).exists():
                     problems.append(f"{rel(config_path)} [{event}]: script {script!r} does not exist")
             if not isinstance(handler.get("timeout"), int):
                 problems.append(f"{rel(config_path)} [{event}]: handler should set an integer timeout")
+        if config_path == REPO / "plugins/dado-release-safety/hooks/hooks.json":
+            destructive = ""
+            for group in config["hooks"].get("PreToolUse", []):
+                commands = [item.get("command", "") for item in group.get("hooks", [])]
+                if any("guard_destructive_commands.py" in item for item in commands):
+                    destructive = group.get("matcher", "")
+                    break
+            tools = {part.strip() for part in destructive.split("|")}
+            if not {"Bash", "PowerShell"}.issubset(tools):
+                problems.append(
+                    f"{rel(config_path)}: destructive-command matcher must cover Bash and PowerShell"
+                )
     for script in HOOK_SCRIPTS:
         if not (REPO / script).exists():
             problems.append(f"expected hook script missing: {script}")
@@ -960,6 +976,22 @@ HOOK_CASES = [
      {"hook_event_name": "PreToolUse", "tool_name": "Bash",
       "tool_input": {"command": "rm -rf build"}},
      "escalate", "recursive force delete asks for confirmation"),
+    ("plugins/dado-release-safety/hooks/guard_destructive_commands.py",
+     {"hook_event_name": "PreToolUse", "tool_name": "PowerShell",
+      "tool_input": {"command": "Get-ChildItem -Force"}},
+     None, "read-only PowerShell passes through"),
+    ("plugins/dado-release-safety/hooks/guard_destructive_commands.py",
+     {"hook_event_name": "PreToolUse", "tool_name": "PowerShell",
+      "tool_input": {"command": "Remove-Item -LiteralPath build -Recurse"}},
+     None, "non-force recursive PowerShell delete does not match the bounded rule"),
+    ("plugins/dado-release-safety/hooks/guard_destructive_commands.py",
+     {"hook_event_name": "PreToolUse", "tool_name": "PowerShell",
+      "tool_input": {"command": "Remove-Item -LiteralPath build -Recurse -Force"}},
+     "escalate", "PowerShell recursive force delete asks for confirmation"),
+    ("plugins/dado-release-safety/hooks/guard_destructive_commands.py",
+     {"hook_event_name": "PreToolUse", "tool_name": "PowerShell",
+      "tool_input": {"command": "remove-item build -fo -r"}},
+     "escalate", "PowerShell aliases and reversed flags ask for confirmation"),
 ]
 
 MALFORMED_INPUTS = ["", "   ", "not json at all", "[]", "null", '{"tool_input": "string"}', "{}"]
@@ -1022,6 +1054,22 @@ def c24():
             problems.append(f"remind_uncommitted.py: exit {code} outside a git repository")
         if out.strip() and "decision" in out:
             problems.append("remind_uncommitted.py: returned a decision; it must be advisory only")
+
+        # Import-level tests are not enough: execute the exact command strings from
+        # hooks.json so interpreter resolution and plugin-root expansion are covered.
+        configured_smoke = subprocess.run(
+            [sys.executable, str(REPO / "tests/run_hook_commands.py")],
+            capture_output=True,
+            text=True,
+            cwd=str(REPO),
+            timeout=60,
+            check=False,
+        )
+        if configured_smoke.returncode != 0:
+            problems.append(
+                "configured hook command smoke failed: "
+                + (configured_smoke.stdout + configured_smoke.stderr).strip()[:500]
+            )
 
         after_tmp = tree_snapshot(tmpdir)
         if after_tmp != before_tmp:

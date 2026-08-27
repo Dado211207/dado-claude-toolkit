@@ -14,7 +14,7 @@ and exits 0, so the normal permission flow applies unchanged.
 
 Limits, stated plainly: this is a convenience guard, not a security boundary. It
 sees only the tool calls Claude Code routes through it, it can be disabled by the
-user at any time, and it does nothing at all if ``python3`` is not on PATH. Do not
+user at any time, and it does nothing at all if ``python`` is not on PATH. Do not
 rely on it to contain an untrusted agent.
 
 Side effects: none. It reads stdin, writes stdout, and touches no file, no network

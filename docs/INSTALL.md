@@ -162,7 +162,7 @@ may still need to run `claude plugin install` once. See
 | --- | --- | --- |
 | A Claude Code version with `/plugin` | Everything | Update; `claude --version` reports yours |
 | `git` | Every git-state check | The workflow does not apply |
-| `python3` on `PATH` | The four hooks, and the validation suite | The hooks are inert. Skills still work |
+| Python 3 as `python` on `PATH` | The four hooks, and the validation suite | The hooks are inert. Skills still work |
 
 No dependency is added to your project.
 
@@ -174,7 +174,8 @@ Clone it and check it before or after installing:
 git clone https://github.com/Dado211207/dado-claude-toolkit
 cd dado-claude-toolkit
 claude plugin validate .
-python3 tests/run_validation.py
+python tests/run_validation.py
+python tests/run_hook_commands.py
 ```
 
 The second command runs 30 structural, safety and behavioural checks, including the

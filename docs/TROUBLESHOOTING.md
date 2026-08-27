@@ -33,15 +33,16 @@ Background: [CLAUDE-CODE-COMPATIBILITY.md](CLAUDE-CODE-COMPATIBILITY.md#the-clou
 
 ## The hooks do nothing
 
-They need `python3` on `PATH`. When it is missing, the hook command fails, Claude
+They need Python 3 exposed as `python` on `PATH`. When it is missing, the hook command fails, Claude
 Code treats that as non-blocking, and the guard is silently inert — no error, no
 protection.
 
 ```bash
-python3 --version
+python --version
 ```
 
-On Windows, ensure `python3` resolves (the `py` launcher aliases usually provide it).
+On Windows, ensure `python --version` resolves to Python 3. The repository's native
+Windows CI executes the exact commands from both `hooks.json` files.
 Also check the plugin is enabled (`claude plugin list`) and that
 `disableAllHooks` is not set in any settings file.
 
@@ -62,7 +63,8 @@ The skills do not depend on the hooks.
 ## The validation suite fails
 
 ```bash
-python3 tests/run_validation.py
+python tests/run_validation.py
+python tests/run_hook_commands.py
 ```
 
 Each failing check prints the exact file, line and reason. Common causes:
@@ -108,4 +110,4 @@ recently.
 
 Open an issue at `https://github.com/Dado211207/dado-claude-toolkit/issues` with the
 output of `claude --version`, `claude plugin list`, and
-`python3 tests/run_validation.py`. Do not paste credentials.
+`python tests/run_validation.py`. Do not paste credentials.

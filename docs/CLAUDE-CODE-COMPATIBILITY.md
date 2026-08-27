@@ -90,8 +90,12 @@ Plugin agents are referenced as `<plugin-name>:<agent-name>`.
 ```
 
 All four hook scripts are invoked as
-`python3 "${CLAUDE_PLUGIN_ROOT}/hooks/<script>.py"`. `${CLAUDE_PLUGIN_ROOT}` is the
+`python "${CLAUDE_PLUGIN_ROOT}/hooks/<script>.py"`. `${CLAUDE_PLUGIN_ROOT}` is the
 documented substitution for a plugin's install directory.
+
+The destructive-command group matches both `Bash` and `PowerShell`. Its bounded
+PowerShell coverage includes the direct recursive-force `Remove-Item` forms; text
+assembled at runtime or hidden in a script remains outside this convenience guard.
 
 Decisions returned: `deny` and `escalate` only. **Never `allow`** — emitting `allow`
 from a hook suppresses your own permission prompt, which would convert a safety hook
@@ -125,7 +129,7 @@ Both key shapes are confirmed against the published settings JSON schema.
 | Plugin agents | Yes | Yes | Yes | Yes |
 | Repository `.claude/agents/` | Yes | Yes | **Yes — picked up automatically** | Yes, after checkout |
 | Repository `.claude/skills/` | Yes | Yes | Yes | Yes, after checkout |
-| Hooks from a plugin | Yes | Yes | Yes, if the plugin loads and `python3` exists | Depends on the runner |
+| Hooks from a plugin | Yes | Yes | Yes, if the plugin loads and `python` resolves to Python 3 | Linux and Windows commands exercised in this repository's CI |
 | `permissions.deny` from project settings | Immediately | Immediately | Immediately | Via the `settings` input |
 | `permissions.allow` from project settings | **After you trust the folder** | After trust | After trust | Via the `settings` input |
 
@@ -165,7 +169,7 @@ everywhere". It does not. See the next section.
 - **Claude Code has no cross-session memory here.** `docs/ai/PROJECT_STATE.md` is a
   tracked file that gets read again because it is committed. Nothing is remembered.
 - **Hooks are not a security boundary.** They see only what Claude Code routes
-  through them, they can be disabled, and they are inert without `python3`.
+  through them, they can be disabled, and they are inert without Python 3 exposed as `python`.
 - **A committed settings file cannot grant permissions silently.** `allow` rules and
   `additionalDirectories` wait for the workspace-trust dialog; `deny` and `ask` rules
   apply immediately. This toolkit ships deny rules only, so nothing waits and nothing
@@ -179,7 +183,7 @@ everywhere". It does not. See the next section.
 | --- | --- | --- |
 | Claude Code new enough for `/plugin` and marketplaces | Everything | Update Claude Code; `claude --version` reports what you have |
 | `git` | Every git-state check | The workflow does not apply |
-| `python3` on `PATH` | The four hook scripts, and the validation suite | Hooks fail, which Claude Code treats as non-blocking, so they are simply inert. Skills are unaffected |
+| Python 3 as `python` on `PATH` | The four hook scripts, and the validation suite | Hooks fail, which Claude Code treats as non-blocking, so they are simply inert. Skills are unaffected |
 
 No other runtime dependency. The toolkit adds nothing to your project's dependency
 tree — see check 26.
@@ -199,7 +203,8 @@ tree — see check 26.
 ```bash
 claude --version
 claude plugin validate .
-python3 tests/run_validation.py
+python tests/run_validation.py
+python tests/run_hook_commands.py
 ```
 
 Then re-read the documentation URLs in the table above. If a format has changed,

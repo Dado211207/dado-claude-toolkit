@@ -49,8 +49,8 @@ runtime hook sandboxing, and rejection of 12 committed invalid fixtures plus
 generated dangerous content.
 
 **CI** — `.github/workflows/validate.yml`: `contents: read` only, no secrets, runs
-the suite twice on Linux, and reports the official validator as skipped rather than
-passed when the CLI is absent.
+the suite twice on Linux and Windows, executes the configured hook commands, and
+requires the official root and per-plugin validators from Claude Code 2.1.246.
 
 **Documentation** — README plus INSTALL, UNINSTALL, LOCAL-USAGE, CLOUD-USAGE,
 GITHUB-ACTIONS, ADOPTION, MAINTENANCE, SECURITY, THREAT-MODEL,
@@ -72,7 +72,7 @@ TRUST-AND-PERMISSIONS, CLAUDE-CODE-COMPATIBILITY and TROUBLESHOOTING, and a
 - The cloud `enabledPlugins` path is documented but **not verified end to end** by
   this repository. See `docs/CLOUD-USAGE.md`.
 - The hooks are convenience guards, not a security boundary, and are inert without
-  `python3` on `PATH`.
+  Python 3 exposed as `python` on `PATH`.
 - The validation suite validates this repository, not the projects the toolkit is
   used on.
 - No tag or GitHub Release exists, so `ref` pinning has no tag to point at yet; pin

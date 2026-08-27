@@ -47,7 +47,7 @@ Three, all fail-open, all read-only:
 
 | Event | Script | Effect |
 | --- | --- | --- |
-| `PreToolUse` on `Bash` | `guard_destructive_commands.py` | **Escalates** (forces your own permission prompt) for force-push, remote ref deletion, hard reset, `git clean -f`, branch/tag deletion, history rewrite, reflog expiry, stash drop, amend, `git merge`, `gh pr merge`, release/repo changes, package publish, host deploy commands, and `rm -rf` |
+| `PreToolUse` on `Bash` or `PowerShell` | `guard_destructive_commands.py` | **Escalates** (forces your own permission prompt) for force-push, remote ref deletion, hard reset, `git clean -f`, branch/tag deletion, history rewrite, reflog expiry, stash drop, amend, `git merge`, `gh pr merge`, release/repo changes, package publish, host deploy commands, `rm -rf`, and bounded `Remove-Item -Recurse -Force` forms |
 | `PreToolUse` on `Write`/`Edit`/`NotebookEdit` | `guard_protected_branch.py` | **Escalates** when the checkout is on `main`, `master`, `prod`, `production`, `release` or `stable`. Override the list with `DADO_PROTECTED_BRANCHES` (comma-separated) |
 | `Stop` | `remind_uncommitted.py` | Advisory only: reports uncommitted files, branch and short SHA at the end of a turn. It returns no decision, so it can never block a turn |
 
@@ -62,9 +62,10 @@ What these hooks are **not**:
 - They write no files, make no network calls, and print no environment variable
   values. `guard_protected_branch.py` and `remind_uncommitted.py` run read-only
   `git` subcommands (no shell, 5-second cap) in the session's working directory.
-- They require `python3` on `PATH`. Without it they fail, Claude Code treats that as
-  non-blocking, and the guards are simply inert — which is why the skills above do
-  not depend on them.
+- They require Python 3 exposed as `python` on `PATH`. Without it they fail, Claude
+  Code treats that as non-blocking, and the guards are simply inert — which is why
+  the skills above do not depend on them. Their actual configured commands and the
+  Bash/PowerShell matcher are exercised on Linux and native Windows in CI.
 
 To turn hooks off without uninstalling: `"disableAllHooks": true` in settings
 (disables *all* hooks), or `/plugin disable dado-release-safety@dado-tools`.

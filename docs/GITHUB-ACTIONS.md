@@ -71,14 +71,16 @@ Same trade-offs as vendoring for cloud sessions — see
 ## This repository's own workflow
 
 `.github/workflows/validate.yml` runs the validation suite on pushes and pull
-requests. It is deliberately minimal:
+requests. It is deliberately bounded:
 
 - `permissions: contents: read` and nothing else
 - no secrets, no `ANTHROPIC_API_KEY`, no Claude Code action
-- Ubuntu only — the suite is pure Python and platform-independent, so a second OS
-  would add time without adding coverage
-- runs `python3 tests/run_validation.py` **twice**, and runs
-  `claude plugin validate .` only if the CLI happens to be present, reporting it as
-  skipped when it is not
+- Ubuntu 24.04 and native Windows 2025 jobs
+- Python 3.11 and Node.js 22 on both runners
+- exact Claude Code CLI `2.1.246`, installed in CI rather than treated as optional
+- `python tests/run_validation.py` **twice** on each OS
+- the exact four commands declared in the two `hooks.json` files on each OS
+- `claude plugin validate` at the marketplace root and for all five plugin roots
+- clean-tree and whitespace checks after every validator
 
 It publishes nothing, deploys nothing, and opens or merges no pull request.

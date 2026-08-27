@@ -17,7 +17,7 @@ Override with the ``DADO_PROTECTED_BRANCHES`` environment variable, a comma-sepa
 list. The value is used for comparison only and is never printed.
 
 Limits: this is a speed bump, not branch protection. Real branch protection lives on
-the git host. The hook is inert without ``python3`` or ``git`` on PATH.
+the git host. The hook is inert without ``python`` or ``git`` on PATH.
 
 Side effects: runs ``git rev-parse --abbrev-ref HEAD`` (read-only, no shell, 5s cap)
 in the session's working directory. Writes no file and makes no network call.

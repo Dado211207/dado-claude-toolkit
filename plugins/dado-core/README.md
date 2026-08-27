@@ -54,10 +54,9 @@ What it does **not** do, stated plainly:
 - It never emits `allow`. It can only refuse or ask, never grant. When nothing
   matches it prints nothing and the normal permission flow applies unchanged.
 - It writes no files, makes no network call, and reads no environment variable.
-- It requires `python3` on `PATH`. Without it the hook fails and Claude Code treats
-  that as non-blocking, so the guard silently does nothing. On Windows, ensure
-  `python3` resolves (the `py` launcher aliases usually provide it) or expect the
-  hook to be inert.
+- It requires Python 3 exposed as `python` on `PATH`. Without it the hook fails and
+  Claude Code treats that as non-blocking, so the guard silently does nothing. The
+  exact configured command is exercised on Linux and native Windows in CI.
 
 To turn it off without uninstalling the plugin, set `"disableAllHooks": true` in
 your settings (this disables *all* hooks, not just this one), or disable the plugin
