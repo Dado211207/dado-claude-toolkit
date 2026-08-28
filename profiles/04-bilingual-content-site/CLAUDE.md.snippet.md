@@ -2,6 +2,10 @@
 
 ## Content rules
 
+For a new page or material visual redesign, use `/dado-ui-design:ui-ux-pro-max`
+before implementation. Its recommendations may change presentation, never approved
+facts, protected terms or language parity.
+
 ### The approved source
 
 `docs/ai/CONTENT-FACTS.md` is the single approved source for factual claims.

@@ -5,6 +5,10 @@
 Start any non-trivial change with `/dado-core:orient`. Review Windows-specific code
 with `/dado-python-windows:python-app-review` before packaging.
 
+For UI structure or visual changes, use `/dado-ui-design:ui-ux-pro-max` with the
+detected Windows UI stack. Preserve keyboard access, scaling, focus and reduced
+motion; design guidance never substitutes for real-PC acceptance.
+
 ### Commands (the real ones for this project)
 
 ```

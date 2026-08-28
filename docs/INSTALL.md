@@ -63,6 +63,7 @@ claude plugin marketplace list
 ```bash
 claude plugin install dado-core@dado-tools
 claude plugin install dado-web-quality@dado-tools
+claude plugin install dado-ui-design@dado-tools
 claude plugin install dado-python-windows@dado-tools
 claude plugin install dado-content-localization@dado-tools
 claude plugin install dado-release-safety@dado-tools
@@ -122,6 +123,7 @@ Plugin skills are namespaced:
 /dado-core:orient
 /dado-core:verify-and-report
 /dado-web-quality:web-audit
+/dado-ui-design:ui-ux-pro-max
 /dado-python-windows:packaging-verify
 /dado-content-localization:bilingual-sync
 /dado-release-safety:deploy-gate
@@ -162,7 +164,7 @@ may still need to run `claude plugin install` once. See
 | --- | --- | --- |
 | A Claude Code version with `/plugin` | Everything | Update; `claude --version` reports yours |
 | `git` | Every git-state check | The workflow does not apply |
-| Python 3 as `python` on `PATH` | The four hooks, and the validation suite | The hooks are inert. Skills still work |
+| Python 3 as `python` on `PATH` | The four hooks, UI design search, and the validation suite | The hooks are inert and UI catalogue search is unavailable. Instruction-only skills still work |
 
 No dependency is added to your project.
 
@@ -178,7 +180,7 @@ python tests/run_validation.py
 python tests/run_hook_commands.py
 ```
 
-The second command runs 30 structural, safety and behavioural checks, including the
+The second command runs 31 structural, safety and behavioural checks, including the
 ones that prove no plugin ships an `allow` rule and no hook can grant a permission.
 
 ## Uninstalling

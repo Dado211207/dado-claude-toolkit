@@ -11,6 +11,7 @@ the expensive mistakes are factual and editorial, not structural.
 | `dado-core` | Orientation, safe editing, honest reporting |
 | `dado-content-localization` | Factual claims, EN/ME parity, CV consistency, copy quality, content diffs |
 | `dado-web-quality` | Metadata mechanics, `hreflang`, routing, layout, accessibility |
+| `dado-ui-design` | Visual direction, typography, interaction, responsive hierarchy and design-system guidance |
 
 The two content plugins divide the work deliberately: `dado-web-quality` checks that
 `hreflang` is reciprocal and the metadata exists; `dado-content-localization` checks
@@ -23,6 +24,7 @@ claude plugin marketplace add Dado211207/dado-claude-toolkit
 claude plugin install dado-core@dado-tools
 claude plugin install dado-content-localization@dado-tools
 claude plugin install dado-web-quality@dado-tools
+claude plugin install dado-ui-design@dado-tools
 ```
 
 ## Files to copy
@@ -100,6 +102,7 @@ disguise.
 ```bash
 claude plugin uninstall dado-content-localization@dado-tools
 claude plugin uninstall dado-web-quality@dado-tools
+claude plugin uninstall dado-ui-design@dado-tools
 claude plugin uninstall dado-core@dado-tools
 claude plugin marketplace remove dado-tools     # optional
 ```

@@ -27,6 +27,7 @@ applied, or when Claude did not pick it up.
 | Deciding what to run | `/dado-core:select-tests` |
 | Before handing back | `/dado-core:verify-and-report` |
 | Reviewing a site | `/dado-web-quality:web-audit` first, then what it points at |
+| Choosing or refining a UI direction | `/dado-ui-design:ui-ux-pro-max` |
 | A browser test is red | `/dado-web-quality:browser-testing` |
 | Windows packaging | `/dado-python-windows:packaging-verify` |
 | Installer behaviour | `/dado-python-windows:install-lifecycle-test` |
@@ -79,5 +80,5 @@ warns about the prompt cache).
 ## Keeping context cost down
 
 Every enabled plugin adds to the context window on every turn. Install the ones the
-project uses, not all five. `/plugin` → **Installed** shows what is enabled and
+project uses, not all six. `/plugin` → **Installed** shows what is enabled and
 flags plugins you have not used recently.

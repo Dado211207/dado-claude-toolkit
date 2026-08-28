@@ -1,0 +1,11 @@
+{
+  "name": "dado-ui-design",
+  "displayName": "Dado UI Design",
+  "version": "0.1.0",
+  "description": "Local UI/UX design intelligence for web, mobile and desktop interfaces, with searchable guidance for design systems, accessibility, interaction, typography, color, animation and stack-specific implementation.",
+  "author": { "name": "Dado211207" },
+  "homepage": "https://github.com/Dado211207/dado-claude-toolkit/blob/main/plugins/dado-ui-design/README.md",
+  "repository": "https://github.com/Dado211207/dado-claude-toolkit",
+  "license": "MIT",
+  "keywords": ["ui", "ux", "design-system", "accessibility", "responsive", "desktop"]
+}

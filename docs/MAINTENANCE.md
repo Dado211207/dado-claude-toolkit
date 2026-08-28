@@ -39,7 +39,7 @@ version. A compatibility page with a stale date is worse than none.
 ## Changing the toolkit
 
 ```bash
-python tests/run_validation.py          # 30 checks; run before and after
+python tests/run_validation.py          # 31 checks; run before and after
 python tests/run_validation.py --quick  # structural only, no subprocesses
 python tests/run_validation.py --json   # machine-readable
 python tests/run_hook_commands.py       # actual configured hook commands

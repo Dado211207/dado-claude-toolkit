@@ -3,6 +3,19 @@
 All notable changes to this repository. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/); versions are semantic.
 
+## [Unreleased]
+
+### Added
+
+- `dado-ui-design` 0.1.0 with the `/dado-ui-design:ui-ux-pro-max` skill for local,
+  searchable UI/UX design guidance across web, mobile and desktop interfaces.
+- A reviewed runtime snapshot of `nextlevelbuilder/ui-ux-pro-max-skill`, pinned to
+  upstream commit `8bd29e775453ebcae52b6e6514fbf134df0c5770`, with MIT license and
+  provenance included. No network client, external process or runtime dependency is
+  added.
+- Validation check 31 pins the provenance and runtime file set, rejects network or
+  subprocess access, and runs a read-only JSON design-system smoke test.
+
 ## [0.1.0] — unreleased
 
 Initial MVP. Not tagged and not released — see the note at the bottom.
@@ -12,7 +25,8 @@ Initial MVP. Not tagged and not released — see the note at the bottom.
 **Marketplace**
 
 - `dado-tools` (`.claude-plugin/marketplace.json`) listing five plugins, each with a
-  relative `source`, a version and an independent description.
+  relative `source`, a version and an independent description at the time of the
+  initial MVP.
 
 **Plugins** (all 0.1.0)
 
@@ -82,5 +96,5 @@ Future work is listed in `docs/MAINTENANCE.md`.
 
 ---
 
-**Release status:** 0.1.0 is proposed in a Draft pull request. It has not been
-merged, tagged, released or deployed.
+**Release status:** 0.1.0 is on `main`, but no tag or GitHub Release has been
+created. The additions under Unreleased are proposed separately and are not released.

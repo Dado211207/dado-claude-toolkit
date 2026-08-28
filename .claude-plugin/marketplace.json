@@ -5,7 +5,7 @@
     "name": "Dado211207",
     "url": "https://github.com/Dado211207"
   },
-  "description": "Reusable Claude Code plugins for repository discipline, web quality gates, Python/Windows desktop release work, bilingual content review, and strict release safety.",
+  "description": "Reusable Claude Code plugins for repository discipline, UI/UX design intelligence, web quality gates, Python/Windows desktop release work, bilingual content review, and strict release safety.",
   "version": "0.1.0",
   "plugins": [
     {
@@ -33,6 +33,19 @@
       "license": "MIT",
       "keywords": ["web", "accessibility", "responsive", "seo", "playwright", "lighthouse"],
       "category": "quality"
+    },
+    {
+      "name": "dado-ui-design",
+      "displayName": "Dado UI Design",
+      "source": "./plugins/dado-ui-design",
+      "description": "Local UI/UX design intelligence for web, mobile and desktop interfaces, with searchable design-system, accessibility, interaction and stack guidance.",
+      "version": "0.1.0",
+      "author": { "name": "Dado211207" },
+      "homepage": "https://github.com/Dado211207/dado-claude-toolkit/blob/main/plugins/dado-ui-design/README.md",
+      "repository": "https://github.com/Dado211207/dado-claude-toolkit",
+      "license": "MIT",
+      "keywords": ["ui", "ux", "design-system", "accessibility", "responsive", "desktop"],
+      "category": "design"
     },
     {
       "name": "dado-python-windows",

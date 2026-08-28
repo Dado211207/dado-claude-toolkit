@@ -9,6 +9,7 @@ particular application: fill in your own paths, names and commands.
 | Plugin | Why |
 | --- | --- |
 | `dado-core` | Orientation, safe editing, test selection, honest reporting |
+| `dado-ui-design` | Desktop information architecture, visual hierarchy, accessibility, interaction and WPF/WinUI implementation guidance |
 | `dado-python-windows` | Windows code review, packaging, installer lifecycle, devices, Windows CI |
 | `dado-release-safety` | The stop line before a build is published to users |
 
@@ -17,6 +18,7 @@ particular application: fill in your own paths, names and commands.
 ```bash
 claude plugin marketplace add Dado211207/dado-claude-toolkit
 claude plugin install dado-core@dado-tools
+claude plugin install dado-ui-design@dado-tools
 claude plugin install dado-python-windows@dado-tools
 claude plugin install dado-release-safety@dado-tools
 ```
@@ -104,6 +106,7 @@ agent output is that checklist with every item left `not-tested`, handed to you.
 ```bash
 claude plugin uninstall dado-release-safety@dado-tools
 claude plugin uninstall dado-python-windows@dado-tools
+claude plugin uninstall dado-ui-design@dado-tools
 claude plugin uninstall dado-core@dado-tools
 claude plugin marketplace remove dado-tools     # optional
 ```

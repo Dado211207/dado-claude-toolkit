@@ -10,6 +10,7 @@ Fastest, and reversible:
 ```bash
 claude plugin disable dado-core@dado-tools
 claude plugin disable dado-web-quality@dado-tools
+claude plugin disable dado-ui-design@dado-tools
 claude plugin disable dado-python-windows@dado-tools
 claude plugin disable dado-content-localization@dado-tools
 claude plugin disable dado-release-safety@dado-tools
@@ -25,6 +26,7 @@ this disables **every** hook from every source, not only this toolkit's.
 ```bash
 claude plugin uninstall dado-core@dado-tools
 claude plugin uninstall dado-web-quality@dado-tools
+claude plugin uninstall dado-ui-design@dado-tools
 claude plugin uninstall dado-python-windows@dado-tools
 claude plugin uninstall dado-content-localization@dado-tools
 claude plugin uninstall dado-release-safety@dado-tools

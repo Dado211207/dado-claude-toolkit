@@ -33,6 +33,7 @@ EXPECTED_MARKETPLACE_NAME = "dado-tools"
 EXPECTED_PLUGINS = (
     "dado-core",
     "dado-web-quality",
+    "dado-ui-design",
     "dado-python-windows",
     "dado-content-localization",
     "dado-release-safety",
@@ -1250,7 +1251,14 @@ def c26():
         for lineno, line in enumerate(text.splitlines(), start=1):
             match = re.match(r"\s*(?:from|import)\s+([A-Za-z_][A-Za-z0-9_]*)", line)
             if match and match.group(1) not in sys.stdlib_module_names:
-                problems.append(f"{rel(path)}:{lineno}: imports non-stdlib module {match.group(1)!r}")
+                imported = match.group(1)
+                # A vendored multi-file standard-library tool may import a sibling
+                # module by its filename. That is local code, not a dependency.
+                sibling = path.parent / f"{imported}.py"
+                if not sibling.exists():
+                    problems.append(
+                        f"{rel(path)}:{lineno}: imports non-stdlib module {imported!r}"
+                    )
     return problems
 
 
@@ -1330,6 +1338,80 @@ def c30():
         pass
     else:
         problems.append("LICENSE is missing but plugin manifests declare a license")
+    return problems
+
+
+@check(31, "the vendored UI design skill is pinned, local-only and runnable", quick=False)
+def c31():
+    problems = []
+    plugin = REPO / "plugins" / "dado-ui-design"
+    skill = plugin / "skills" / "ui-ux-pro-max"
+    provenance = read_text(plugin / "THIRD_PARTY.md") or ""
+    expected_commit = "8bd29e775453ebcae52b6e6514fbf134df0c5770"
+    if expected_commit not in provenance:
+        problems.append("THIRD_PARTY.md does not pin the reviewed upstream commit")
+    if "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill" not in provenance:
+        problems.append("THIRD_PARTY.md does not identify the upstream repository")
+    license_text = read_text(plugin / "THIRD_PARTY_LICENSE.txt") or ""
+    if "MIT License" not in license_text:
+        problems.append("the upstream MIT license is missing or unrecognisable")
+
+    expected_runtime = {
+        "core.py", "design_system.py", "reasoning_contract.py", "search.py",
+        "validate_data.py",
+    }
+    scripts = skill / "scripts"
+    present_runtime = {path.name for path in scripts.glob("*.py")}
+    if present_runtime != expected_runtime:
+        problems.append(
+            "vendored runtime files differ from the reviewed set: "
+            f"expected {sorted(expected_runtime)}, found {sorted(present_runtime)}"
+        )
+    if not (skill / "data").is_dir() or not (skill / "references").is_dir():
+        problems.append("the vendored data or references directory is missing")
+
+    banned_runtime = (
+        ("network import", re.compile(r"^\s*(?:from|import)\s+(?:requests|httpx|socket|http\.client|urllib\.request)\b", re.MULTILINE)),
+        ("subprocess import", re.compile(r"^\s*(?:from|import)\s+subprocess\b", re.MULTILINE)),
+        ("process execution", re.compile(r"\b(?:os\.system|os\.popen|subprocess\.|Popen\s*\()")),
+    )
+    for path in sorted(scripts.glob("*.py")):
+        text = read_text(path) or ""
+        for label, pattern in banned_runtime:
+            if pattern.search(text):
+                problems.append(f"{rel(path)}: contains {label}")
+
+    search = scripts / "search.py"
+    if search.exists():
+        smoke_env = os.environ.copy()
+        smoke_env["PYTHONDONTWRITEBYTECODE"] = "1"
+        completed = subprocess.run(
+            [sys.executable, str(search), "local AI assistant dashboard",
+             "--design-system", "--json"],
+            cwd=REPO,
+            env=smoke_env,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=False,
+        )
+        if completed.returncode:
+            problems.append(
+                "the local design-system smoke test failed: "
+                + (completed.stdout + completed.stderr).strip()[:500]
+            )
+        else:
+            try:
+                output = json.loads(completed.stdout)
+            except json.JSONDecodeError as exc:
+                problems.append(f"the design-system smoke test returned invalid JSON: {exc}")
+            else:
+                design = output.get("design_system")
+                if not isinstance(design, dict) or not design.get("pattern"):
+                    problems.append("the design-system smoke test returned no usable pattern")
+                persistence = output.get("persistence")
+                if persistence not in (None, {"status": "not-requested"}):
+                    problems.append("the read-only smoke test unexpectedly persisted output")
     return problems
 
 

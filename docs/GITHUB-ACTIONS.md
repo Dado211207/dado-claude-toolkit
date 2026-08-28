@@ -80,7 +80,7 @@ requests. It is deliberately bounded:
 - exact Claude Code CLI `2.1.246`, installed in CI rather than treated as optional
 - `python tests/run_validation.py` **twice** on each OS
 - the exact four commands declared in the two `hooks.json` files on each OS
-- `claude plugin validate` at the marketplace root and for all five plugin roots
+- `claude plugin validate` at the marketplace root and for all six plugin roots
 - clean-tree and whitespace checks after every validator
 
 It publishes nothing, deploys nothing, and opens or merges no pull request.
