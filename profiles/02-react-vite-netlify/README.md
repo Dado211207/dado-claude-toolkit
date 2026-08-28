@@ -10,6 +10,7 @@ that actually exist rather than assuming this stack.
 | --- | --- |
 | `dado-core` | Orientation, safe editing, test selection, honest reporting |
 | `dado-web-quality` | Responsive layout, accessibility, routing, metadata, headers, browser testing, deploy previews |
+| `dado-ui-design` | Coherent visual direction, design systems, interaction, typography, color and stack-specific UI guidance |
 
 Add `dado-release-safety` (profile 05) once the site has real users.
 Add `dado-content-localization` (profile 04) if the site is bilingual.
@@ -20,6 +21,7 @@ Add `dado-content-localization` (profile 04) if the site is bilingual.
 claude plugin marketplace add Dado211207/dado-claude-toolkit
 claude plugin install dado-core@dado-tools
 claude plugin install dado-web-quality@dado-tools
+claude plugin install dado-ui-design@dado-tools
 ```
 
 ## Files to copy
@@ -67,8 +69,9 @@ curl -sSI https://<preview-url>/    # headers as actually served
 curl -s -o /dev/null -w "%{http_code}\n" https://<preview-url>/not-a-real-route
 ```
 
-Typical review flow: `/dado-web-quality:web-audit` first (it establishes what can
-honestly be checked), then the specific skills it points at.
+Typical design flow: `/dado-ui-design:ui-ux-pro-max` for a deliberate visual system,
+then `/dado-web-quality:web-audit` to establish what can honestly be verified and run
+the specific quality checks it points at.
 
 ## What remains manual
 
@@ -85,6 +88,7 @@ honestly be checked), then the specific skills it points at.
 
 ```bash
 claude plugin uninstall dado-web-quality@dado-tools
+claude plugin uninstall dado-ui-design@dado-tools
 claude plugin uninstall dado-core@dado-tools
 claude plugin marketplace remove dado-tools     # optional
 ```

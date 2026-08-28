@@ -1,8 +1,8 @@
 # dado-claude-toolkit
 
-A Claude Code **plugin marketplace** named `dado-tools`, containing five opt-in
-plugins for repository discipline, web quality, Python/Windows desktop releases,
-bilingual content review, and release safety.
+A Claude Code **plugin marketplace** named `dado-tools`, containing six opt-in
+plugins for repository discipline, UI/UX design intelligence, web quality,
+Python/Windows desktop releases, bilingual content review, and release safety.
 
 - **Version:** 0.1.0 (initial MVP)
 - **Owner:** [Dado211207](https://github.com/Dado211207)
@@ -41,11 +41,12 @@ reports harder to fake.
 | --- | --- | --- |
 | [`dado-core`](plugins/dado-core/) | 0.1.0 | Orientation, planning, evidence-first debugging, safe editing, test selection, honest verification, uncertainty tracking, optional project state |
 | [`dado-web-quality`](plugins/dado-web-quality/) | 0.1.0 | Responsive layout, accessibility, routing and scroll behaviour, metadata and SEO, security/caching headers, browser testing, deploy previews |
+| [`dado-ui-design`](plugins/dado-ui-design/) | 0.1.0 | Local design-system, visual hierarchy, interaction, typography, color, motion and stack-specific UI guidance for web, mobile and desktop |
 | [`dado-python-windows`](plugins/dado-python-windows/) | 0.1.0 | Windows code review, PyInstaller and Inno Setup verification, installer lifecycle, devices and credentials, Windows CI portability |
 | [`dado-content-localization`](plugins/dado-content-localization/) | 0.1.0 | Factual claims, EN/ME parity, CV consistency, copy quality, content diffs |
 | [`dado-release-safety`](plugins/dado-release-safety/) | 0.1.0 | Pre-change snapshot, CI evidence, artifact integrity, Draft PR, deploy gate |
 
-31 skills, 14 agents, 4 hooks. Each plugin works on its own; installing `dado-core`
+32 skills, 14 agents, 4 hooks. Each plugin works on its own; installing `dado-core`
 alongside the others is recommended, not required.
 
 ## Trust warning — read before installing
@@ -81,6 +82,7 @@ instructions, scopes and pinning: [docs/INSTALL.md](docs/INSTALL.md).
 /dado-core:orient                        # before changing anything
 /dado-core:verify-and-report             # before handing work back
 /dado-web-quality:web-audit              # what can honestly be checked here
+/dado-ui-design:ui-ux-pro-max            # design direction and implementation guidance
 /dado-release-safety:deploy-gate         # the stop line before anything irreversible
 ```
 
@@ -119,7 +121,7 @@ what to clean up: [docs/UNINSTALL.md](docs/UNINSTALL.md).
 
 ```bash
 claude plugin validate .              # the official Claude Code validator
-python tests/run_validation.py        # 30 structural, safety and behavioural checks
+python tests/run_validation.py        # 31 structural, safety and behavioural checks
 python tests/run_hook_commands.py     # execute all four configured hook commands
 ```
 

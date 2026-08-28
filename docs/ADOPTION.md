@@ -10,9 +10,9 @@ detail. This page is the decision.
 | Your project | Profile | Plugins |
 | --- | --- | --- |
 | Anything; you want the smallest useful footprint | [`01-minimal-general`](../profiles/01-minimal-general/) | `dado-core` |
-| A website or web app (React, Vite, TypeScript, static HTML, Netlify) | [`02-react-vite-netlify`](../profiles/02-react-vite-netlify/) | + `dado-web-quality` |
-| A Python desktop app packaged for Windows | [`03-python-windows-desktop`](../profiles/03-python-windows-desktop/) | + `dado-python-windows`, `dado-release-safety` |
-| A content-heavy site in two languages | [`04-bilingual-content-site`](../profiles/04-bilingual-content-site/) | + `dado-content-localization`, `dado-web-quality` |
+| A website or web app (React, Vite, TypeScript, static HTML, Netlify) | [`02-react-vite-netlify`](../profiles/02-react-vite-netlify/) | + `dado-web-quality`, `dado-ui-design` |
+| A Python desktop app packaged for Windows | [`03-python-windows-desktop`](../profiles/03-python-windows-desktop/) | + `dado-python-windows`, `dado-ui-design`, `dado-release-safety` |
+| A content-heavy site in two languages | [`04-bilingual-content-site`](../profiles/04-bilingual-content-site/) | + `dado-content-localization`, `dado-web-quality`, `dado-ui-design` |
 | Anything with real users in production | [`05-release-sensitive`](../profiles/05-release-sensitive/) | + `dado-release-safety` |
 
 Profile 05 layers on top of a stack profile rather than replacing it.

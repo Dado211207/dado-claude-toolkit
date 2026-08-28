@@ -7,9 +7,9 @@ modifies any repository on its own.
 | Profile | For | Plugins |
 | --- | --- | --- |
 | [`01-minimal-general`](01-minimal-general/) | Any repository, smallest useful footprint | `dado-core` |
-| [`02-react-vite-netlify`](02-react-vite-netlify/) | React / Vite / TypeScript site on Netlify | `dado-core`, `dado-web-quality` |
-| [`03-python-windows-desktop`](03-python-windows-desktop/) | Python desktop app packaged for Windows | `dado-core`, `dado-python-windows`, `dado-release-safety` |
-| [`04-bilingual-content-site`](04-bilingual-content-site/) | Content-heavy site in two languages | `dado-core`, `dado-content-localization`, `dado-web-quality` |
+| [`02-react-vite-netlify`](02-react-vite-netlify/) | React / Vite / TypeScript site on Netlify | `dado-core`, `dado-web-quality`, `dado-ui-design` |
+| [`03-python-windows-desktop`](03-python-windows-desktop/) | Python desktop app packaged for Windows | `dado-core`, `dado-ui-design`, `dado-python-windows`, `dado-release-safety` |
+| [`04-bilingual-content-site`](04-bilingual-content-site/) | Content-heavy site in two languages | `dado-core`, `dado-content-localization`, `dado-web-quality`, `dado-ui-design` |
 | [`05-release-sensitive`](05-release-sensitive/) | Anything deployed to production users | `dado-core`, `dado-release-safety` (+ the stack profile) |
 
 Each profile directory contains:

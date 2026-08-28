@@ -6,6 +6,11 @@ Start any non-trivial change with `/dado-core:orient`. Start any quality review 
 `/dado-web-quality:web-audit`, which establishes what can honestly be checked here
 before anything is claimed.
 
+For a new page or material visual redesign, use `/dado-ui-design:ui-ux-pro-max` to
+propose a coherent design system before implementation. Treat its local search
+results as recommendations; project requirements and measured accessibility remain
+authoritative.
+
 ### Commands (the real ones for this project)
 
 ```
