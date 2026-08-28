@@ -32,7 +32,10 @@ The behavioural-path adaptation replaces the upstream standalone skill path
 path `${CLAUDE_PLUGIN_ROOT}/skills/ui-ux-pro-max/`. Three anti-pattern examples use
 `<user>`/`<app>` placeholders instead of account-like absolute paths so the toolkit
 does not ship personal-looking filesystem strings. Catalogue meaning and runtime
-Python logic are otherwise copied from the pinned commit.
+Python logic are otherwise copied from the pinned commit. The generated
+`phosphor-icons-upstream.json` catalogue is JSON-minified without changing its parsed
+data, keeping the vendored plugin smaller and avoiding transport-dependent formatting;
+the corresponding raw-file fingerprint in `catalog-summary.json` is updated.
 
 The imported runtime was audited for network and subprocess access and exercised
 against its upstream test suite before adoption. The toolkit validation pins this
