@@ -1,5 +1,8 @@
 # dado-claude-toolkit
 
+> [Aktuelni projektni handoff](docs/PROJECT_HANDOFF.md) — presjek 12. oktobra 2026.
+
+
 A Claude Code **plugin marketplace** named `dado-tools`, containing six opt-in
 plugins for repository discipline, UI/UX design intelligence, web quality,
 Python/Windows desktop releases, bilingual content review, and release safety.
